@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BlogCreator.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogCreator
 {
@@ -21,6 +23,10 @@ namespace BlogCreator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            // добавляем контекст MobileContext в качестве сервиса в приложение
+            services.AddDbContext<BlogCreatorContext>(options =>
+                options.UseSqlServer(connection));
             services.AddMvc();
         }
 
